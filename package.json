@@ -1,0 +1,23 @@
+{
+  "name": "api-icd10",
+  "version": "1.0.0",
+  "description": "This is open source ICD-10 API REST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-whunter:maikcodes/api-ICD10.git"
+  },
+  "keywords": [
+    "ICD-10",
+    "ICD",
+    "CIE-10"
+  ],
+  "author": "willy maykros romero (maikcodes)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
