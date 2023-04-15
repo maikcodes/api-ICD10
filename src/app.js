@@ -1,17 +1,21 @@
 import express from "express";
 import "dotenv/config";
+import v1DiseasesRouter from "./v1/routes/disease.routes.js";
+import { sendErrorResponse } from "./helpers/response.helpers.js";
 
 const app = express();
 
 // settings
 app.set("port", process.env.SERVER_PORT || 4000);
-// app.set("dbConnectionString", process.env.DB_CONNECTION_STRING);
-app.use(express.json());
 
-// import diseases from "./entities/diseases.js";
-app.get("/", async (req, res) => {
-  // const all = await diseases.getAll();
-  res.send({});
+// middleware
+app.use(express.json());
+app.use("/api/v1/diseases", v1DiseasesRouter);
+
+// error handling middleware
+app.use((err, req, res, next) => {
+  console.error("Some error occurs ⚠⚠⚠", err.stack);
+  res.status(500).send(sendErrorResponse(res, err));
 });
 
 export default app;

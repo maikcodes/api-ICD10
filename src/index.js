@@ -1,12 +1,10 @@
 import app from "./app.js";
-import connectionState  from "./infrastructure/database/connection.js";
+import { connectionState } from "./database/connection.js";
 
 const main = async () => {
   try {
-    await connectionState.connectionState()
-    // if (!(await connectionState)) {
-    //   throw error;
-    // }
+    await connectionState();
+
     const port = app.get("port");
     app.listen(port);
     console.log(`ICD-10 API rocks 🚀, "http://localhost:${port}"`);
