@@ -3,7 +3,7 @@ import {
   sendSuccessResponse,
   sendErrorResponse,
 } from "../helpers/response.helpers.js";
-import { ResourceNotFoundError } from "../errors/resourceNotFoundError.js";
+import { ResourceNotFoundError } from "../errors/ResourceNotFoundError.js";
 import { parseDiseaseRequestBody } from "../helpers/disease.request.helpers.js";
 
 const create = async (req, res) => {
@@ -65,6 +65,11 @@ const remove = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedDisease = await diseaseServices.remove(id);
+
+    if (!deletedDisease) {
+      throw new ResourceNotFoundError("Disease not found");
+    }
+
     await sendSuccessResponse(res, deletedDisease);
   } catch (error) {
     await sendErrorResponse(res, error);

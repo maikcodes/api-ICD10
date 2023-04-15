@@ -1,4 +1,4 @@
-import { BaseError } from "./baseError.js";
+import { BaseError } from "./BaseError.js";
 
 export class ResourceNotFoundError extends BaseError {
   constructor(message) {
