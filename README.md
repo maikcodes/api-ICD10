@@ -4,7 +4,11 @@
 
 **ICD-10 API RESTful** to implement in your own projects:
 
-- [ ] Basic API RESTfull
+- [x] Stablish connection
+- [x] Basic API RESTfull
+- [ ] Testing
+- [ ] Linter On
+- [ ] More useful endpoints
 - [ ] Api documentation swagger
 - [ ] Docker container
 - [ ] Webpage
