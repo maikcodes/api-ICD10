@@ -1,49 +1,63 @@
-import { Disease } from "../models/disease.js";
+import { Disease } from '../models/disease.js'
+import { logException } from '../../middlewares/exception.logs.js'
 
 const create = async (disease) => {
   try {
-    const newDisease = new Disease({ ...disease });
-    await newDisease.save();
-    return newDisease;
+    const newDisease = new Disease(disease)
+    await newDisease.save()
+    return newDisease
   } catch (error) {
-    throw error;
+    logException('database', __filename, error)
+    throw error
   }
-};
+}
 
 const getAll = async () => {
-  const allDisease = await Disease.find();
-  return allDisease;
-};
+  try {
+    const allDisease = await Disease.find()
+    return allDisease
+  } catch (error) {
+    logException('database', __filename, error)
+    throw error
+  }
+}
 
 const getById = async (id) => {
-  const disease = await Disease.findById(id);
-  return disease;
-};
+  try {
+    const disease = await Disease.findById(id)
+    return disease
+  } catch (error) {
+    logException('database', __filename, error)
+    throw error
+  }
+}
 
 const update = async (id, disease) => {
   try {
     const updatedDisease = await Disease.findByIdAndUpdate(id, disease, {
-      new: true,
-    });
-    return updatedDisease;
+      new: true
+    })
+    return updatedDisease
   } catch (error) {
-    throw error;
+    logException('database', __filename, error)
+    throw error
   }
-};
+}
 
 const remove = async (id) => {
   try {
-    const deletedDisease = await Disease.findByIdAndDelete(id);
-    return deletedDisease;
+    const deletedDisease = await Disease.findByIdAndDelete(id)
+    return deletedDisease
   } catch (error) {
-    throw error;
+    logException('database', __filename, error)
+    throw error
   }
-};
+}
 
 export default {
   create,
   getAll,
   getById,
   update,
-  remove,
-};
+  remove
+}

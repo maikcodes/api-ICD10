@@ -1,13 +1,13 @@
-import diseaseController from "../../controllers/disease.controller.js";
+import diseaseController from '../../controllers/disease.controller.js'
 
-import { Router } from "express";
+import { Router } from 'express'
 
-const router = Router();
+const router = Router()
 
-router.get("/", diseaseController.getAll);
-router.get("/:id", diseaseController.getById);
-router.post("/", diseaseController.create);
-router.put("/:id", diseaseController.update);
-router.delete("/:id", diseaseController.remove);
+router.get('/', diseaseController.getAll)
+router.get('/:id', diseaseController.getById)
+router.post('/', diseaseController.create)
+router.put('/:id', diseaseController.update)
+router.delete('/:id', diseaseController.remove)
 
-export default router;
+export default router

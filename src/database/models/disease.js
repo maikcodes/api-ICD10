@@ -1,6 +1,6 @@
-import { mongoose } from "../connection.js";
+import { mongoose } from '../connection.js'
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const diseaseSchema = new Schema(
   {
@@ -10,11 +10,11 @@ const diseaseSchema = new Schema(
     fourDigitsDescription: { type: String },
     threeDigitsCode: { type: String, minLength: 3, maxLength: 3 },
     threeDigitsDescription: { type: String },
-    yearVersion: { type: String, match: /\b(1\d{3}|[2-9]\d{3})\b/ },
+    yearVersion: { type: String, match: /\b(1\d{3}|[2-9]\d{3})\b/ }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
-);
+)
 
-export const Disease = mongoose.model("disease", diseaseSchema);
+export const Disease = mongoose.model('disease', diseaseSchema)

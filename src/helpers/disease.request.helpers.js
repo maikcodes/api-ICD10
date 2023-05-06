@@ -6,8 +6,8 @@ export const parseDiseaseRequestBody = (req) => {
     fourDigitsDescription,
     threeDigitsCode,
     threeDigitsDescription,
-    yearVersion,
-  } = req.body;
+    yearVersion
+  } = req.body
 
   const disease = {
     chapter,
@@ -16,8 +16,8 @@ export const parseDiseaseRequestBody = (req) => {
     fourDigitsDescription,
     threeDigitsCode,
     threeDigitsDescription,
-    yearVersion,
-  };
+    yearVersion
+  }
 
-  return disease;
-};
+  return disease
+}
