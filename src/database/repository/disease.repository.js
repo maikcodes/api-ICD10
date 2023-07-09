@@ -7,7 +7,7 @@ const create = async (disease) => {
     await newDisease.save()
     return newDisease
   } catch (error) {
-    logException('database', __filename, error)
+    logException('database', 'disease.repository.js', error)
     throw error
   }
 }
@@ -17,8 +17,17 @@ const getAll = async () => {
     const allDisease = await Disease.find()
     return allDisease
   } catch (error) {
-    logException('database', __filename, error)
+    logException('database', 'disease.repository.js', error)
     throw error
+  }
+}
+
+const getByChapterId = async (chapterId) => {
+  try {
+    const diseases = await Disease.find({ chapter_id: chapterId })
+    return diseases
+  } catch (error) {
+    logException('database', 'disease.repository.js', error)
   }
 }
 
@@ -27,7 +36,7 @@ const getById = async (id) => {
     const disease = await Disease.findById(id)
     return disease
   } catch (error) {
-    logException('database', __filename, error)
+    logException('database', 'disease.repository.js', error)
     throw error
   }
 }
@@ -39,7 +48,7 @@ const update = async (id, disease) => {
     })
     return updatedDisease
   } catch (error) {
-    logException('database', __filename, error)
+    logException('database', 'disease.repository.js', error)
     throw error
   }
 }
@@ -49,7 +58,7 @@ const remove = async (id) => {
     const deletedDisease = await Disease.findByIdAndDelete(id)
     return deletedDisease
   } catch (error) {
-    logException('database', __filename, error)
+    logException('database', 'disease.repository.js', error)
     throw error
   }
 }
@@ -57,6 +66,7 @@ const remove = async (id) => {
 export default {
   create,
   getAll,
+  getByChapterId,
   getById,
   update,
   remove

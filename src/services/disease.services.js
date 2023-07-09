@@ -6,7 +6,7 @@ const create = async (disease) => {
     const newDisease = await diseaseRepository.create(disease)
     return newDisease
   } catch (error) {
-    logException('services', __filename, error)
+    logException('services', 'disease.services.js', error)
     throw error
   }
 }
@@ -16,7 +16,17 @@ const getAll = async () => {
     const allDiseases = await diseaseRepository.getAll()
     return allDiseases
   } catch (error) {
-    logException('services', __filename, error)
+    logException('services', 'disease.services.js', error)
+    throw error
+  }
+}
+
+const getByChapterId = async (chapterId) => {
+  try {
+    const diseases = await diseaseRepository.getByChapterId(chapterId)
+    return diseases
+  } catch (error) {
+    logException('services', 'disease.services.js', error)
     throw error
   }
 }
@@ -26,7 +36,7 @@ const getById = async (id) => {
     const disease = await diseaseRepository.getById(id)
     return disease
   } catch (error) {
-    logException('services', __filename, error)
+    logException('services', 'disease.services.js', error)
     throw error
   }
 }
@@ -40,7 +50,7 @@ const update = async (id, disease) => {
     const editedDisease = await diseaseRepository.update(id, disease)
     return editedDisease
   } catch (error) {
-    logException('services', __filename, error)
+    logException('services', 'disease.services.js', error)
     throw error
   }
 }
@@ -50,7 +60,7 @@ const remove = async (id) => {
     const deletedDisease = await diseaseRepository.remove(id)
     return deletedDisease
   } catch (error) {
-    logException('services', __filename, error)
+    logException('services', 'disease.services.js', error)
     throw error
   }
 }
@@ -58,6 +68,7 @@ const remove = async (id) => {
 export default {
   create,
   getAll,
+  getByChapterId,
   getById,
   getByFourthDigitsCode,
   getByThreeDigitsCode,

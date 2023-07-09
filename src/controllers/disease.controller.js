@@ -13,7 +13,7 @@ const create = async (req, res) => {
     const newDisease = await diseaseServices.create(disease)
     await sendSuccessResponse(res, newDisease)
   } catch (error) {
-    logException('controllers', __filename, error)
+    logException('controllers', 'disease.controller.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -23,7 +23,23 @@ const getAll = async ({ res }) => {
     const allDiseases = await diseaseServices.getAll()
     await sendSuccessResponse(res, allDiseases)
   } catch (error) {
-    logException('controllers', __filename, error)
+    logException('controllers', 'disease.controller.js', error)
+    await sendErrorResponse(res, error)
+  }
+}
+
+const getByChapterId = async (req, res) => {
+  try {
+    const { chapterId } = req.params
+    const diseases = await diseaseServices.getByChapterId(chapterId)
+
+    if (!diseases || diseases.length === 0) {
+      throw new ResourceNotFoundError(`Diseases with chapter ${chapterId} was not found`)
+    }
+
+    await sendSuccessResponse(res, diseases)
+  } catch (error) {
+    logException('controllers', 'disease.controller.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -39,7 +55,7 @@ const getById = async (req, res) => {
 
     await sendSuccessResponse(res, disease)
   } catch (error) {
-    logException('controllers', __filename, error)
+    logException('controllers', 'disease.controller.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -60,7 +76,7 @@ const update = async (req, res) => {
 
     await sendSuccessResponse(res, editedDisease)
   } catch (error) {
-    logException('controllers', __filename, error)
+    logException('controllers', 'disease.controller.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -83,6 +99,7 @@ const remove = async (req, res) => {
 export default {
   create,
   getAll,
+  getByChapterId,
   getById,
   getByFourthDigitsCode,
   getByThreeDigitsCode,

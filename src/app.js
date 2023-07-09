@@ -10,6 +10,8 @@ app.set('port', process.env.SERVER_PORT || 4000)
 
 // middleware
 app.use(express.json())
+
+// routes
 app.use('/api/v1/diseases', v1DiseasesRouter)
 
 // error handling middleware
