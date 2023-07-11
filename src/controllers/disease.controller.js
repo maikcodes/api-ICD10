@@ -13,7 +13,7 @@ const create = async (req, res) => {
     const newDisease = await diseaseServices.create(disease)
     await sendSuccessResponse(res, newDisease)
   } catch (error) {
-    logException('controllers', 'disease.controller.js', error)
+    logException('controllers', 'disease.controllers.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -23,7 +23,7 @@ const getAll = async ({ res }) => {
     const allDiseases = await diseaseServices.getAll()
     await sendSuccessResponse(res, allDiseases)
   } catch (error) {
-    logException('controllers', 'disease.controller.js', error)
+    logException('controllers', 'disease.controllers.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -34,12 +34,28 @@ const getByChapterId = async (req, res) => {
     const diseases = await diseaseServices.getByChapterId(chapterId)
 
     if (!diseases || diseases.length === 0) {
-      throw new ResourceNotFoundError(`Diseases with chapter ${chapterId} was not found`)
+      throw new ResourceNotFoundError(`Diseases with chapter ${chapterId} were not found`)
     }
 
     await sendSuccessResponse(res, diseases)
   } catch (error) {
-    logException('controllers', 'disease.controller.js', error)
+    logException('controllers', 'disease.controllers.js', error)
+    await sendErrorResponse(res, error)
+  }
+}
+
+const getByFourDigitsCode = async (req, res) => {
+  try {
+    const { digitsCode } = req.params
+    const diseases = await diseaseServices.getByFourDigitsCode(digitsCode)
+
+    if (!diseases || diseases.length === 0) {
+      throw new ResourceNotFoundError(`Diseases with four digits ${digitsCode} code were not found`)
+    }
+
+    await sendSuccessResponse(res, diseases)
+  } catch (error) {
+    logException('controllers', 'disease.controllers.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -50,19 +66,64 @@ const getById = async (req, res) => {
     const disease = await diseaseServices.getById(id)
 
     if (!disease) {
-      throw new ResourceNotFoundError('Disease not found')
+      throw new ResourceNotFoundError(`Disease with id ${id} was not found`)
     }
 
     await sendSuccessResponse(res, disease)
   } catch (error) {
-    logException('controllers', 'disease.controller.js', error)
+    logException('controllers', 'disease.controllers.js', error)
     await sendErrorResponse(res, error)
   }
 }
 
-const getByFourthDigitsCode = async (req, res) => {}
+const getByKeyword = async (req, res) => {
+  try {
+    const { keyword } = req.params
+    const diseases = await diseaseServices.getByKeyword(keyword)
 
-const getByThreeDigitsCode = async (req, res) => {}
+    if (!diseases || !diseases.length === 0) {
+      throw new ResourceNotFoundError(`Diseases with keyword ${keyword} were not found`)
+    }
+
+    await sendSuccessResponse(res, diseases)
+  } catch (error) {
+    logException('controllers', 'disease.controllers.js')
+    await sendErrorResponse(res, error)
+  }
+}
+
+const getByRange = async (req, res) => {
+  try {
+    const { range } = req.params
+    const [startRange, endRange] = range.split('-')
+    const diseases = await diseaseServices.getByRange(startRange, endRange)
+
+    if (!diseases || diseases.length === 0) {
+      throw new ResourceNotFoundError(`Diseases in range ${startRange} and ${endRange} was not found`)
+    }
+
+    await sendSuccessResponse(res, diseases)
+  } catch (error) {
+    logException('controllers', 'disease.controllers.js', error)
+    await sendErrorResponse(res, error)
+  }
+}
+
+const getByThreeDigitsCode = async (req, res) => {
+  try {
+    const { digitsCode } = req.params
+    const diseases = await diseaseServices.getByThreeDigitsCode(digitsCode)
+
+    if (!diseases || diseases.length === 0) {
+      throw new ResourceNotFoundError(`Diseases with three digits ${digitsCode} code was not found`)
+    }
+
+    await sendSuccessResponse(res, diseases)
+  } catch (error) {
+    logException('controllers', 'disease.controllers.js', error)
+    await sendErrorResponse(res, error)
+  }
+}
 
 const update = async (req, res) => {
   try {
@@ -76,7 +137,7 @@ const update = async (req, res) => {
 
     await sendSuccessResponse(res, editedDisease)
   } catch (error) {
-    logException('controllers', 'disease.controller.js', error)
+    logException('controllers', 'disease.controllers.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -92,6 +153,7 @@ const remove = async (req, res) => {
 
     await sendSuccessResponse(res, deletedDisease)
   } catch (error) {
+    logException('controllers', 'disease.controllers.js', error)
     await sendErrorResponse(res, error)
   }
 }
@@ -100,8 +162,10 @@ export default {
   create,
   getAll,
   getByChapterId,
+  getByFourDigitsCode,
   getById,
-  getByFourthDigitsCode,
+  getByKeyword,
+  getByRange,
   getByThreeDigitsCode,
   update,
   remove

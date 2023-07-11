@@ -31,6 +31,16 @@ const getByChapterId = async (chapterId) => {
   }
 }
 
+const getByFourDigitsCode = async (digitsCode) => {
+  try {
+    const diseases = await diseaseRepository.getByFourDigitsCode(digitsCode)
+    return diseases
+  } catch (error) {
+    logException('services', 'diseases.services.js', error)
+    throw error
+  }
+}
+
 const getById = async (id) => {
   try {
     const disease = await diseaseRepository.getById(id)
@@ -41,9 +51,35 @@ const getById = async (id) => {
   }
 }
 
-const getByFourthDigitsCode = async () => {}
+const getByKeyword = async (keyword) => {
+  try {
+    const diseases = await diseaseRepository.getByKeyword(keyword)
+    return diseases
+  } catch (error) {
+    logException('services', 'disease.services.js', error)
+    throw error
+  }
+}
 
-const getByThreeDigitsCode = async () => {}
+const getByRange = async (startRange, endRange) => {
+  try {
+    const diseases = await diseaseRepository.getByRange(startRange, endRange)
+    return diseases
+  } catch (error) {
+    logException('services', 'disease.services.js', error)
+    throw error
+  }
+}
+
+const getByThreeDigitsCode = async (digitsCode) => {
+  try {
+    const diseases = await diseaseRepository.getByThreeDigitsCode(digitsCode)
+    return diseases
+  } catch (error) {
+    logException('services', 'disease.services.js', error)
+    throw error
+  }
+}
 
 const update = async (id, disease) => {
   try {
@@ -69,8 +105,10 @@ export default {
   create,
   getAll,
   getByChapterId,
+  getByFourDigitsCode,
   getById,
-  getByFourthDigitsCode,
+  getByKeyword,
+  getByRange,
   getByThreeDigitsCode,
   update,
   remove
