@@ -6,6 +6,12 @@ import {
   sendSuccessResponse,
   sendErrorResponse
 } from '../helpers/response.helpers.js'
+import { QueryError } from '../errors/QueryError.js'
+
+const handleException = (error) => {
+  logException('controllers', 'disease.controllers.js', error)
+  throw error
+}
 
 const create = async (req, res) => {
   try {
@@ -13,7 +19,7 @@ const create = async (req, res) => {
     const newDisease = await diseaseServices.create(disease)
     await sendSuccessResponse(res, newDisease)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -23,7 +29,7 @@ const getAll = async ({ res }) => {
     const allDiseases = await diseaseServices.getAll()
     await sendSuccessResponse(res, allDiseases)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -34,12 +40,14 @@ const getByChapterId = async (req, res) => {
     const diseases = await diseaseServices.getByChapterId(chapterId)
 
     if (!diseases || diseases.length === 0) {
-      throw new ResourceNotFoundError(`Diseases with chapter ${chapterId} were not found`)
+      throw new ResourceNotFoundError(
+        `Diseases with chapter ${chapterId} were not found`
+      )
     }
 
     await sendSuccessResponse(res, diseases)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -50,12 +58,14 @@ const getByFourDigitsCode = async (req, res) => {
     const diseases = await diseaseServices.getByFourDigitsCode(digitsCode)
 
     if (!diseases || diseases.length === 0) {
-      throw new ResourceNotFoundError(`Diseases with four digits ${digitsCode} code were not found`)
+      throw new ResourceNotFoundError(
+        `Diseases with four digits ${digitsCode} code were not found`
+      )
     }
 
     await sendSuccessResponse(res, diseases)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -71,7 +81,7 @@ const getById = async (req, res) => {
 
     await sendSuccessResponse(res, disease)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -82,29 +92,43 @@ const getByKeyword = async (req, res) => {
     const diseases = await diseaseServices.getByKeyword(keyword)
 
     if (!diseases || !diseases.length === 0) {
-      throw new ResourceNotFoundError(`Diseases with keyword ${keyword} were not found`)
+      throw new ResourceNotFoundError(
+        `Diseases with keyword ${keyword} were not found`
+      )
     }
 
     await sendSuccessResponse(res, diseases)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js')
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
 
 const getByRange = async (req, res) => {
   try {
-    const { range } = req.params
+    const { attribute, range } = req.params
     const [startRange, endRange] = range.split('-')
-    const diseases = await diseaseServices.getByRange(startRange, endRange)
+    const diseases = await diseaseServices.getByRange(
+      attribute,
+      startRange,
+      endRange
+    )
 
     if (!diseases || diseases.length === 0) {
-      throw new ResourceNotFoundError(`Diseases in range ${startRange} and ${endRange} was not found`)
+      throw new ResourceNotFoundError(
+        `Diseases in range ${startRange} and ${endRange} was not found`
+      )
     }
 
     await sendSuccessResponse(res, diseases)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    if (error instanceof QueryError) {
+      error.message = error.message.replace('attribute', 'parameter')
+      await sendErrorResponse(res, error)
+      return
+    }
+
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -115,12 +139,14 @@ const getByThreeDigitsCode = async (req, res) => {
     const diseases = await diseaseServices.getByThreeDigitsCode(digitsCode)
 
     if (!diseases || diseases.length === 0) {
-      throw new ResourceNotFoundError(`Diseases with three digits ${digitsCode} code was not found`)
+      throw new ResourceNotFoundError(
+        `Diseases with three digits ${digitsCode} code was not found`
+      )
     }
 
     await sendSuccessResponse(res, diseases)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -137,7 +163,7 @@ const update = async (req, res) => {
 
     await sendSuccessResponse(res, editedDisease)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }
@@ -153,7 +179,7 @@ const remove = async (req, res) => {
 
     await sendSuccessResponse(res, deletedDisease)
   } catch (error) {
-    logException('controllers', 'disease.controllers.js', error)
+    handleException(error)
     await sendErrorResponse(res, error)
   }
 }

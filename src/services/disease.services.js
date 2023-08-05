@@ -1,13 +1,18 @@
 import diseaseRepository from '../database/repository/disease.repository.js'
 import { logException } from '../middlewares/exception.logs.js'
+import { QueryError } from '../errors/QueryError.js'
+
+const handleException = (error) => {
+  logException('services', 'disease.services.js', error)
+  throw error
+}
 
 const create = async (disease) => {
   try {
     const newDisease = await diseaseRepository.create(disease)
     return newDisease
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -16,8 +21,7 @@ const getAll = async () => {
     const allDiseases = await diseaseRepository.getAll()
     return allDiseases
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -26,8 +30,7 @@ const getByChapterId = async (chapterId) => {
     const diseases = await diseaseRepository.getByChapterId(chapterId)
     return diseases
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -36,8 +39,7 @@ const getByFourDigitsCode = async (digitsCode) => {
     const diseases = await diseaseRepository.getByFourDigitsCode(digitsCode)
     return diseases
   } catch (error) {
-    logException('services', 'diseases.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -46,8 +48,7 @@ const getById = async (id) => {
     const disease = await diseaseRepository.getById(id)
     return disease
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -56,18 +57,20 @@ const getByKeyword = async (keyword) => {
     const diseases = await diseaseRepository.getByKeyword(keyword)
     return diseases
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
-const getByRange = async (startRange, endRange) => {
+const getByRange = async (attribute, startRange, endRange) => {
   try {
-    const diseases = await diseaseRepository.getByRange(startRange, endRange)
+    const diseases = await diseaseRepository.getByRange(attribute, startRange, endRange)
     return diseases
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    if (error instanceof QueryError) {
+      throw error
+    }
+
+    handleException(error)
   }
 }
 
@@ -76,8 +79,7 @@ const getByThreeDigitsCode = async (digitsCode) => {
     const diseases = await diseaseRepository.getByThreeDigitsCode(digitsCode)
     return diseases
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -86,8 +88,7 @@ const update = async (id, disease) => {
     const editedDisease = await diseaseRepository.update(id, disease)
     return editedDisease
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
@@ -96,8 +97,7 @@ const remove = async (id) => {
     const deletedDisease = await diseaseRepository.remove(id)
     return deletedDisease
   } catch (error) {
-    logException('services', 'disease.services.js', error)
-    throw error
+    handleException(error)
   }
 }
 
