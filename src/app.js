@@ -5,7 +5,7 @@ import v1DiseasesRouter from './v1/routes/disease.routes.js'
 const app = express()
 
 // settings
-app.set('port', process.env.SERVER_PORT ?? 4000)
+app.set('port', process.env.PORT ?? 4000)
 
 // middleware
 app.use(express.json())
