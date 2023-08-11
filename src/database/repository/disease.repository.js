@@ -8,6 +8,35 @@ const handleException = (error) => {
   throw error
 }
 
+const findSkipAndLimit = async (skip = null, limit = null, query = {}) => {
+  try {
+    const results = await Disease.find(query).skip(skip).limit(limit)
+    return results
+  } catch (error) {
+    handleException(error)
+  }
+}
+
+const foundItemsCount = async (query) => {
+  try {
+    const countedResults = await Disease.find(query).countDocuments()
+    return countedResults
+  } catch (error) {
+    handleException(error)
+  }
+}
+
+const executeQuery = async (skip, limit, query) => {
+  let result = await findSkipAndLimit(skip, limit, query)
+
+  if (typeof skip === 'number') {
+    const totalDiseases = await foundItemsCount(query)
+    result = { data: result, total: totalDiseases, limit }
+  }
+
+  return result
+}
+
 const create = async (disease) => {
   try {
     const newDisease = new Disease(disease)
@@ -18,18 +47,19 @@ const create = async (disease) => {
   }
 }
 
-const getAll = async () => {
+const getAll = async (skip = null, limit = null) => {
   try {
-    const allDisease = await Disease.find()
+    const allDisease = await executeQuery(skip, limit)
     return allDisease
   } catch (error) {
     handleException(error)
   }
 }
 
-const getByChapterId = async (chapterId) => {
+const getByChapterId = async (chapterId, skip = null, limit = null) => {
   try {
-    const diseases = await Disease.find({ chapter_id: chapterId })
+    const query = { chapter_id: chapterId }
+    const diseases = await executeQuery(skip, limit, query)
     return diseases
   } catch (error) {
     handleException(error)
@@ -54,21 +84,28 @@ const getById = async (id) => {
   }
 }
 
-const getByKeyword = async (keyword) => {
+const getByKeyword = async (keyword, skip = null, limit = null) => {
   try {
-    const diseases = await Disease.find({
+    const query = {
       $or: [
         { three_code_title: { $regex: `.*${keyword}.*`, $options: 'i' } },
         { four_code_title: { $regex: `.*${keyword}.*`, $options: 'i' } }
       ]
-    })
+    }
+    const diseases = await executeQuery(skip, limit, query)
     return diseases
   } catch (error) {
     handleException(error)
   }
 }
 
-const getByRange = async (attribute, startRange, endRange) => {
+const getByRange = async (
+  attribute,
+  startRange,
+  endRange,
+  skip = null,
+  limit = null
+) => {
   try {
     const attributeMapped = attributesMapping[attribute]
 
@@ -76,18 +113,18 @@ const getByRange = async (attribute, startRange, endRange) => {
       throw new QueryError(`Invalid attribute ${attribute}`)
     }
 
-    const diseases = await Disease.find({
-      [attributeMapped]: { $gte: startRange, $lte: endRange }
-    })
+    const query = { [attributeMapped]: { $gte: startRange, $lte: endRange } }
+    const diseases = await executeQuery(skip, limit, query)
     return diseases
   } catch (error) {
     handleException(error)
   }
 }
 
-const getByThreeDigitsCode = async (digitsCode) => {
+const getByThreeDigitsCode = async (digitsCode, skip = null, limit = null) => {
   try {
-    const diseases = await Disease.find({ three_code_id: digitsCode })
+    const query = { three_code_id: digitsCode }
+    const diseases = executeQuery(skip, limit, query)
     return diseases
   } catch (error) {
     handleException(error)

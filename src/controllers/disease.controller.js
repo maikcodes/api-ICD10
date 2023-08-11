@@ -1,16 +1,16 @@
 import diseaseServices from '../services/disease.services.js'
 import { logException } from '../middlewares/exception.logs.js'
-import { parseDiseaseRequestBody } from '../helpers/disease.request.helpers.js'
+import { parseDiseaseRequestBody } from '../controllers/helpers/disease.request.helpers.js'
 import { ResourceNotFoundError } from '../errors/ResourceNotFoundError.js'
 import {
   sendSuccessResponse,
   sendErrorResponse
-} from '../helpers/response.helpers.js'
+} from '../controllers/helpers/response.helpers.js'
 import { QueryError } from '../errors/QueryError.js'
+import { formatResults } from './helpers/Pagination.js'
 
 const handleException = (error) => {
   logException('controllers', 'disease.controllers.js', error)
-  throw error
 }
 
 const create = async (req, res) => {
@@ -24,10 +24,12 @@ const create = async (req, res) => {
   }
 }
 
-const getAll = async ({ res }) => {
+const getAll = async (req, res) => {
   try {
-    const allDiseases = await diseaseServices.getAll()
-    await sendSuccessResponse(res, allDiseases)
+    const { page, limit } = req.query
+    const allDiseases = await diseaseServices.getAll(page, limit)
+    const results = formatResults(allDiseases, page)
+    await sendSuccessResponse(res, results)
   } catch (error) {
     handleException(error)
     await sendErrorResponse(res, error)
@@ -37,7 +39,9 @@ const getAll = async ({ res }) => {
 const getByChapterId = async (req, res) => {
   try {
     const { chapterId } = req.params
-    const diseases = await diseaseServices.getByChapterId(chapterId)
+    const { page, limit } = req.query
+
+    const diseases = await diseaseServices.getByChapterId(chapterId, page, limit)
 
     if (!diseases || diseases.length === 0) {
       throw new ResourceNotFoundError(
@@ -45,7 +49,8 @@ const getByChapterId = async (req, res) => {
       )
     }
 
-    await sendSuccessResponse(res, diseases)
+    const results = formatResults(diseases, page)
+    await sendSuccessResponse(res, results)
   } catch (error) {
     handleException(error)
     await sendErrorResponse(res, error)
@@ -89,7 +94,9 @@ const getById = async (req, res) => {
 const getByKeyword = async (req, res) => {
   try {
     const { keyword } = req.params
-    const diseases = await diseaseServices.getByKeyword(keyword)
+    const { page, limit } = req.query
+
+    const diseases = await diseaseServices.getByKeyword(keyword, page, limit)
 
     if (!diseases || !diseases.length === 0) {
       throw new ResourceNotFoundError(
@@ -97,7 +104,8 @@ const getByKeyword = async (req, res) => {
       )
     }
 
-    await sendSuccessResponse(res, diseases)
+    const results = formatResults(diseases, page)
+    await sendSuccessResponse(res, results)
   } catch (error) {
     handleException(error)
     await sendErrorResponse(res, error)
@@ -107,20 +115,24 @@ const getByKeyword = async (req, res) => {
 const getByRange = async (req, res) => {
   try {
     const { attribute, range } = req.params
+    const { page, limit } = req.query
     const [startRange, endRange] = range.split('-')
     const diseases = await diseaseServices.getByRange(
       attribute,
       startRange,
-      endRange
+      endRange,
+      page,
+      limit
     )
 
-    if (!diseases || diseases.length === 0) {
+    if (!diseases) {
       throw new ResourceNotFoundError(
-        `Diseases in range ${startRange} and ${endRange} was not found`
+        `Diseases in range ${startRange} - ${endRange} were not found`
       )
     }
 
-    await sendSuccessResponse(res, diseases)
+    const results = formatResults(diseases, page)
+    await sendSuccessResponse(res, results)
   } catch (error) {
     if (error instanceof QueryError) {
       error.message = error.message.replace('attribute', 'parameter')
@@ -136,15 +148,18 @@ const getByRange = async (req, res) => {
 const getByThreeDigitsCode = async (req, res) => {
   try {
     const { digitsCode } = req.params
-    const diseases = await diseaseServices.getByThreeDigitsCode(digitsCode)
+    const { page, limit } = req.query
+
+    const diseases = await diseaseServices.getByThreeDigitsCode(digitsCode, page, limit)
 
     if (!diseases || diseases.length === 0) {
       throw new ResourceNotFoundError(
-        `Diseases with three digits ${digitsCode} code was not found`
+        `Diseases with three digits ${digitsCode} code were not found`
       )
     }
 
-    await sendSuccessResponse(res, diseases)
+    const results = formatResults(diseases, page)
+    await sendSuccessResponse(res, results)
   } catch (error) {
     handleException(error)
     await sendErrorResponse(res, error)

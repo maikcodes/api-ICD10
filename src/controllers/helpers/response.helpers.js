@@ -1,5 +1,8 @@
 export const sendSuccessResponse = async (res, data, status = 200) => {
-  res.status(status).send({ status: 'OK', data })
+  if (data?.currentPage) {
+    return res.status(status).send({ status: 'OK', ...data })
+  }
+  return res.status(status).send({ status: 'OK', data })
 }
 
 export const sendErrorResponse = async (res, error) => {

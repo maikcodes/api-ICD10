@@ -7,13 +7,13 @@
 - [x] Stablish connection
 - [x] Basic API RESTfull
 - [x] Linter On
-- [ ] More useful endpoints
+- [x] More useful endpoints
   - [x] Get diseases by chapter
   - [x] Get disease using 4 digits code
   - [x] Get all disease using 3 digits code
   - [x] Get all diseases in range
   - [x] Get diseases with match string, return array with matched word and used word
-  - [ ] Get with pagination categories | subcategories | averaged
+  - [x] Get with pagination categories | subcategories | averaged
 - [ ] Testing
 - [ ] Api documentation swagger
 - [ ] Docker container
