@@ -6,8 +6,8 @@ export const formatResults = (results, page) => {
   const totalPages = Math.ceil(results.total / results.limit)
 
   const resultsFormatted = {
-    currentPage: page,
-    totalPages,
+    current_page: page,
+    total_pages: totalPages,
     data: results.data
   }
   return resultsFormatted

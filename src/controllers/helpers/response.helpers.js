@@ -1,5 +1,5 @@
 export const sendSuccessResponse = async (res, data, status = 200) => {
-  if (data?.currentPage) {
+  if (data?.current_page) {
     return res.status(status).send({ status: 'OK', ...data })
   }
   return res.status(status).send({ status: 'OK', data })
