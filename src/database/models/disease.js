@@ -4,16 +4,19 @@ const Schema = mongoose.Schema
 
 const diseaseSchema = new Schema(
   {
-    chapter: { type: Number, min: 1, max: 12 },
-    chapterName: { type: String },
-    fourDigitsCode: { type: String, minLength: 4, maxLength: 4 },
-    fourDigitsDescription: { type: String },
-    threeDigitsCode: { type: String, minLength: 3, maxLength: 3 },
-    threeDigitsDescription: { type: String },
-    yearVersion: { type: String, match: /\b(1\d{3}|[2-9]\d{3})\b/ }
+    chapter_id: { type: String, minLength: 1, maxLength: 3 },
+    chapter_title: { type: String },
+    range_id: { type: String },
+    range_title: { type: String },
+    four_code_id: { type: String, length: 5 },
+    four_code_title: { type: String },
+    three_code_id: { type: String, length: 3 },
+    three_code_title: { type: String }
+    // yearVersion: { type: String, match: /\b(1\d{3}|[2-9]\d{3})\b/ }
   },
   {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
   }
 )
 
