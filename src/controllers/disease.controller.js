@@ -17,7 +17,7 @@ const create = async (req, res) => {
   try {
     const disease = parseDiseaseRequestBody(req)
     const newDisease = await diseaseServices.create(disease)
-    await sendSuccessResponse(res, newDisease)
+    await sendSuccessResponse(res, newDisease, 201)
   } catch (error) {
     handleException(error)
     await sendErrorResponse(res, error)
@@ -59,12 +59,12 @@ const getByChapterId = async (req, res) => {
 
 const getByFourDigitsCode = async (req, res) => {
   try {
-    const { digitsCode } = req.params
-    const diseases = await diseaseServices.getByFourDigitsCode(digitsCode)
+    const { fourDigitsCode } = req.params
+    const diseases = await diseaseServices.getByFourDigitsCode(fourDigitsCode)
 
     if (!diseases || diseases.length === 0) {
       throw new ResourceNotFoundError(
-        `Diseases with four digits ${digitsCode} code were not found`
+        `Diseases with four digits ${fourDigitsCode} code were not found`
       )
     }
 
@@ -147,14 +147,14 @@ const getByRange = async (req, res) => {
 
 const getByThreeDigitsCode = async (req, res) => {
   try {
-    const { digitsCode } = req.params
+    const { threeDigitsCode } = req.params
     const { page, limit } = req.query
 
-    const diseases = await diseaseServices.getByThreeDigitsCode(digitsCode, page, limit)
+    const diseases = await diseaseServices.getByThreeDigitsCode(threeDigitsCode, page, limit)
 
     if (!diseases || diseases.length === 0) {
       throw new ResourceNotFoundError(
-        `Diseases with three digits ${digitsCode} code were not found`
+        `Diseases with three digits ${threeDigitsCode} code were not found`
       )
     }
 
