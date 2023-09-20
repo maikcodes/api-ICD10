@@ -1,8 +1,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
-import app from '../../src/app.js'
 
-const BASE_URL = app.get('test_url')
+const BASE_URL = 'https://api-icd10-8bv2-dev.fl0.io/api/v1/diseases'
 
 describe('ICD-10 API endpoints suite test', async () => {
   it('Return json of diseases', async () => {
