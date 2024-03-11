@@ -1,10 +1,14 @@
 version: "3.7"
 
 services:
-  api-cie10:
-    build: .
-    ports:
-      - "4000:4000"
-
   mongo:
     image: mongo:latest
+
+  cie10-api:
+    build: .
+    ports:
+      - 4000:4000
+    environment:
+      - DB_CONNECTION_STRING=mongodb://mongo:27017/cie10
+    depends_on:
+      - mongo
