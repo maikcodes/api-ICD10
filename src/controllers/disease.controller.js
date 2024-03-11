@@ -40,8 +40,13 @@ const getByChapterId = async (req, res) => {
   try {
     const { chapterId } = req.params
     const { page, limit } = req.query
+    console.log('🚀 ~ getByChapterId ~ chapterId:', chapterId)
 
-    const diseases = await diseaseServices.getByChapterId(chapterId, page, limit)
+    const diseases = await diseaseServices.getByChapterId(
+      chapterId,
+      page,
+      limit
+    )
 
     if (!diseases || diseases.length === 0) {
       throw new ResourceNotFoundError(
@@ -150,7 +155,11 @@ const getByThreeDigitsCode = async (req, res) => {
     const { threeDigitsCode } = req.params
     const { page, limit } = req.query
 
-    const diseases = await diseaseServices.getByThreeDigitsCode(threeDigitsCode, page, limit)
+    const diseases = await diseaseServices.getByThreeDigitsCode(
+      threeDigitsCode,
+      page,
+      limit
+    )
 
     if (!diseases || diseases.length === 0) {
       throw new ResourceNotFoundError(

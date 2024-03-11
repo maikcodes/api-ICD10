@@ -5,8 +5,9 @@ services:
     image: mongo:latest
     container_name: icd10-api-mongo
 
-  cie10-api:
+  icd10-api:
     build: .
+    container_name: icd10-api
     ports:
       - 4000:4000
     environment:
