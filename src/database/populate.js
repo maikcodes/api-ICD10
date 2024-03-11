@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import diseaseRepository from './repository/disease.repository.js'
-import { connectionState } from './connection.js'
+import { connectionState, closeConnection } from './connection.js'
 
 const BULK_INSERT_LIMIT = 5000
 
@@ -25,6 +25,7 @@ async function loadICD10Data () {
 
 loadICD10Data()
   .then(() => {
+    closeConnection()
     console.log('ICD10 data loaded successfully')
   })
   .catch((error) => {
