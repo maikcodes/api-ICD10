@@ -1,23 +1,23 @@
-name: Integration tests suite
-run-name: ${{ github.actor }} runs integration tests suite
+# name: Integration tests suite
+# run-name: ${{ github.actor }} runs integration tests suite
 
-on: [push]
+# on: [push]
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.2.0"
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: "20.2.0"
 
-      - name: Install depedencies
-        run: npm install
+#       - name: Install depedencies
+#         run: npm install
 
       # - name: Run tests
       # run: npm test

@@ -1,4 +1,4 @@
-import diseaseRepository from '../database/repository/disease.repository.js'
+import { DiseaseRepository } from '../database/repository/disease.repository.js'
 import { getStartIndexAndLimit } from './Pagination.js'
 import { logException } from '../middlewares/exception.logs.js'
 import { QueryError } from '../errors/QueryError.js'
@@ -8,153 +8,150 @@ const handleException = (error) => {
   throw error
 }
 
-const create = async (disease) => {
-  try {
-    const newDisease = await diseaseRepository.create(disease)
-    return newDisease
-  } catch (error) {
-    handleException(error)
-  }
-}
-
-const getAll = async (page, limit) => {
-  try {
-    if (page) {
-      const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
-      const diseases = await diseaseRepository.getAll(startIndex, newLimit)
-      return diseases
+export class DiseaseServices {
+  static async create (disease) {
+    try {
+      const newDisease = await DiseaseRepository.create(disease)
+      return newDisease
+    } catch (error) {
+      handleException(error)
     }
-
-    const diseases = await diseaseRepository.getAll()
-    return diseases
-  } catch (error) {
-    handleException(error)
   }
-}
 
-const getByChapterId = async (chapterId, page, limit) => {
-  try {
-    if (page) {
-      const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
-      const diseases = await diseaseRepository.getByChapterId(
-        chapterId,
-        startIndex,
-        newLimit
-      )
+  static async getAll (page, limit) {
+    try {
+      if (page) {
+        const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
+        const diseases = await DiseaseRepository.getAll(startIndex, newLimit)
+        return diseases
+      }
+
+      const diseases = await DiseaseRepository.getAll()
       return diseases
+    } catch (error) {
+      handleException(error)
     }
-
-    const diseases = await diseaseRepository.getByChapterId(chapterId)
-    return diseases
-  } catch (error) {
-    handleException(error)
   }
-}
 
-const getByFourDigitsCode = async (digitsCode) => {
-  try {
-    const diseases = await diseaseRepository.getByFourDigitsCode(digitsCode)
-    return diseases
-  } catch (error) {
-    handleException(error)
-  }
-}
+  static async getByChapterId (chapterId, page, limit) {
+    try {
+      if (page) {
+        const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
+        const diseases = await DiseaseRepository.getByChapterId(
+          chapterId,
+          startIndex,
+          newLimit
+        )
+        return diseases
+      }
 
-const getById = async (id) => {
-  try {
-    const disease = await diseaseRepository.getById(id)
-    return disease
-  } catch (error) {
-    handleException(error)
-  }
-}
-
-const getByKeyword = async (keyword, page, limit) => {
-  try {
-    if (page) {
-      const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
-      const diseases = await diseaseRepository.getByKeyword(
-        keyword,
-        startIndex,
-        newLimit
-      )
+      const diseases = await DiseaseRepository.getByChapterId(chapterId)
       return diseases
+    } catch (error) {
+      handleException(error)
     }
-
-    const diseases = await diseaseRepository.getByKeyword(keyword)
-    return diseases
-  } catch (error) {
-    handleException(error)
   }
-}
 
-const getByRange = async (attribute, startRange, endRange, page, limit) => {
-  try {
-    if (page) {
-      const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
-      const diseases = await diseaseRepository.getByRange(
+  static async getByFourDigitsCode (digitsCode) {
+    try {
+      const diseases = await DiseaseRepository.getByFourDigitsCode(digitsCode)
+      return diseases
+    } catch (error) {
+      handleException(error)
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const disease = await DiseaseRepository.getById(id)
+      return disease
+    } catch (error) {
+      handleException(error)
+    }
+  }
+
+  static async getByKeyword (keyword, page, limit) {
+    try {
+      if (page) {
+        const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
+        const diseases = await DiseaseRepository.getByKeyword(
+          keyword,
+          startIndex,
+          newLimit
+        )
+        return diseases
+      }
+
+      const diseases = await DiseaseRepository.getByKeyword(keyword)
+      return diseases
+    } catch (error) {
+      handleException(error)
+    }
+  }
+
+  static async getByRange (attribute, startRange, endRange, page, limit) {
+    try {
+      if (page) {
+        const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
+        const diseases = await DiseaseRepository.getByRange(
+          attribute,
+          startRange,
+          endRange,
+          startIndex,
+          newLimit
+        )
+        return diseases
+      }
+
+      const diseases = await DiseaseRepository.getByRange(
         attribute,
         startRange,
-        endRange,
-        startIndex,
-        newLimit
+        endRange
       )
       return diseases
-    }
+    } catch (error) {
+      if (error instanceof QueryError) {
+        throw error
+      }
 
-    const diseases = await diseaseRepository.getByRange(attribute, startRange, endRange)
-    return diseases
-  } catch (error) {
-    if (error instanceof QueryError) {
-      throw error
+      handleException(error)
     }
-
-    handleException(error)
   }
-}
 
-const getByThreeDigitsCode = async (digitsCode, page, limit) => {
-  try {
-    if (page) {
-      const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
-      const diseases = await diseaseRepository.getByThreeDigitsCode(digitsCode, startIndex, newLimit)
+  static async getByThreeDigitsCode (digitsCode, page, limit) {
+    try {
+      if (page) {
+        const [startIndex, newLimit] = getStartIndexAndLimit(page, limit)
+        const diseases = await DiseaseRepository.getByThreeDigitsCode(
+          digitsCode,
+          startIndex,
+          newLimit
+        )
+        return diseases
+      }
+
+      const diseases = await DiseaseRepository.getByThreeDigitsCode(digitsCode)
       return diseases
+    } catch (error) {
+      handleException(error)
     }
-
-    const diseases = await diseaseRepository.getByThreeDigitsCode(digitsCode)
-    return diseases
-  } catch (error) {
-    handleException(error)
   }
-}
 
-const update = async (id, disease) => {
-  try {
-    const editedDisease = await diseaseRepository.update(id, disease)
-    return editedDisease
-  } catch (error) {
-    handleException(error)
+  static async update (id, disease) {
+    try {
+      const editedDisease = await DiseaseRepository.update(id, disease)
+      return editedDisease
+    } catch (error) {
+      handleException(error)
+    }
   }
-}
 
-const remove = async (id) => {
-  try {
-    const deletedDisease = await diseaseRepository.remove(id)
-    return deletedDisease
-  } catch (error) {
-    handleException(error)
+  static async remove (id) {
+    try {
+      const deletedDisease = await DiseaseRepository.remove(id)
+      return deletedDisease
+    } catch (error) {
+      handleException(error)
+    }
   }
-}
-
-export default {
-  create,
-  getAll,
-  getByChapterId,
-  getByFourDigitsCode,
-  getById,
-  getByKeyword,
-  getByRange,
-  getByThreeDigitsCode,
-  update,
-  remove
 }

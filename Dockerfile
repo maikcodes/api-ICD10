@@ -6,4 +6,6 @@ COPY . .
 
 RUN npm install
 
-CMD npm run populate && npm run start
+RUN npm run populate
+
+CMD ["npm", "run", "start"]
