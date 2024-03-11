@@ -3,6 +3,7 @@ version: "3.7"
 services:
   mongo:
     image: mongo:latest
+    container_name: icd10-api-mongo
 
   cie10-api:
     build: .
