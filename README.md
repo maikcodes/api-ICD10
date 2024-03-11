@@ -16,5 +16,5 @@
   - [x] Get with pagination categories | subcategories | averaged
 - [ ] Testing
 - [ ] Api documentation swagger
-- [ ] Docker container
+- [x] Docker container
 - [ ] Webpage
