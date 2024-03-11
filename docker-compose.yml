@@ -11,6 +11,6 @@ services:
     ports:
       - 4000:4000
     environment:
-      - DB_CONNECTION_STRING=mongodb://mongo:27017/cie10
+      - DB_CONNECTION_STRING=mongodb://mongo:27017/icd10
     depends_on:
       - mongo
