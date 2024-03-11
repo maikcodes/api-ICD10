@@ -151,6 +151,14 @@ const remove = async (id) => {
   }
 }
 
+const bulkInsert = async (diseases) => {
+  try {
+    await Disease.insertMany(diseases)
+  } catch (error) {
+    handleException(error)
+  }
+}
+
 export default {
   create,
   getAll,
@@ -161,5 +169,6 @@ export default {
   getByRange,
   getByThreeDigitsCode,
   update,
-  remove
+  remove,
+  bulkInsert
 }

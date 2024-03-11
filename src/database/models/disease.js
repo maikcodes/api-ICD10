@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const diseaseSchema = new Schema(
   {
-    chapter_id: { type: String, minLength: 1, maxLength: 4 },
+    chapter_id: { type: String, minLength: 1, maxLength: 5 },
     chapter_title: { type: String },
     range_id: { type: String },
     range_title: { type: String },
