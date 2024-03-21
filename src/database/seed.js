@@ -1,13 +1,19 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import diseaseRepository from './repository/disease.repository.js'
+import { DiseaseRepository } from './repository/disease.repository.js'
 import { connectionState, closeConnection } from './connection.js'
 
 const BULK_INSERT_LIMIT = 5000
 
-async function loadICD10Data () {
+async function seedICD10Data () {
   await connectionState()
+
+  const count = await DiseaseRepository.count()
+  if (count > 0) {
+    console.log('Data already exists, skipping seeding')
+    return
+  }
 
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = path.dirname(__filename)
@@ -17,17 +23,15 @@ async function loadICD10Data () {
   const cie10Data = JSON.parse(data)
 
   for (let i = 0; i < cie10Data.length; i += BULK_INSERT_LIMIT) {
-    console.log(`Inserting chunk ${i} to ${i + BULK_INSERT_LIMIT}`)
     const chunk = cie10Data.slice(i, i + BULK_INSERT_LIMIT)
-    await diseaseRepository.bulkInsert(chunk)
+    await DiseaseRepository.bulkInsert(chunk)
   }
 }
 
-loadICD10Data()
+seedICD10Data()
   .then(() => {
     closeConnection()
-    console.log('ICD10 data loaded successfully')
   })
   .catch((error) => {
-    console.error('Error loading ICD10 data', error)
+    console.error('Error seeding data', error)
   })

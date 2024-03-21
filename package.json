@@ -10,7 +10,7 @@
     "test": "node test/integration/icd10.test.js",
     "lint_check": "standard",
     "lint_fix": "standard --fix",
-    "populate": "node src/database/populate.js"
+    "seed": "node src/database/populate.js"
   },
   "repository": {
     "type": "git",

@@ -159,4 +159,14 @@ export class DiseaseRepository {
       handleException(error)
     }
   }
+
+  static async count () {
+    try {
+      const count = await Disease.countDocuments()
+      console.log('🚀 ~ DiseaseRepository ~ count ~ count:', count)
+      return count
+    } catch (error) {
+      handleException(error)
+    }
+  }
 }
