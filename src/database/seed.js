@@ -2,12 +2,12 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { DiseaseRepository } from './repository/disease.repository.js'
-import { connectionState, closeConnection } from './connection.js'
+import { Connection } from './connection.js'
 
 const BULK_INSERT_LIMIT = 5000
 
 async function seedICD10Data () {
-  await connectionState()
+  await Connection.connect()
 
   const count = await DiseaseRepository.count()
   if (count > 0) {
@@ -30,7 +30,7 @@ async function seedICD10Data () {
 
 seedICD10Data()
   .then(() => {
-    closeConnection()
+    Connection.close()
   })
   .catch((error) => {
     console.error('Error seeding data', error)
