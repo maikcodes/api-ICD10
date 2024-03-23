@@ -23,6 +23,11 @@ async function seedICD10Data () {
   const cie10Data = JSON.parse(data)
 
   for (let i = 0; i < cie10Data.length; i += BULK_INSERT_LIMIT) {
+    console.log(
+      `Inserting chunk ${i} to ${i + BULK_INSERT_LIMIT} of ${
+        cie10Data.length
+      } documents in icd10 collection`
+    )
     const chunk = cie10Data.slice(i, i + BULK_INSERT_LIMIT)
     await DiseaseRepository.bulkInsert(chunk)
   }

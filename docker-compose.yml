@@ -6,6 +6,8 @@ services:
     container_name: icd10-api-mongo
     ports:
       - 27017:27017
+    volumes:
+      - mongo_data_icd10:/data/db
 
   icd10-api:
     build: .
@@ -17,3 +19,6 @@ services:
     depends_on:
       - mongo
     command: bash -c "npm run seed && npm run start"
+
+volumes:
+  mongo_data_icd10:
