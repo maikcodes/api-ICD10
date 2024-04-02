@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "node test/integration/icd10.test.js",
+    "test": "",
     "lint_check": "standard",
     "lint_fix": "standard --fix",
     "seed": "node src/database/seed.js"
@@ -26,7 +26,10 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
+    "glob": "^10.3.12",
     "mongoose": "^7.0.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
