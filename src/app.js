@@ -1,9 +1,12 @@
 import express, { Router } from 'express'
 import 'dotenv/config'
 
-import { registerRoutes } from './v1/routes/register.js'
+import { registerRoutes, registerDocRoutes } from './v1/routes/register.js'
+
 const router = Router()
+const docRouter = Router()
 registerRoutes(router)
+registerDocRoutes(docRouter)
 
 const app = express()
 
@@ -16,6 +19,7 @@ app.use(express.json())
 
 // routes
 app.use('/api/v1/diseases', router)
+app.use('/api-docs', docRouter)
 
 // not found routes middleware
 app.use((req, res, next) => {
