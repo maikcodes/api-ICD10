@@ -13,6 +13,18 @@ export class Connection {
     }
   }
 
+  static async isConnected () {
+    /**
+     * Possible values for mongoose.connection.readyState
+     * 0: disconnected
+     * 1: connected
+     * 2: connecting
+     * 3: disconnecting
+     * see: https://mongoosejs.com/docs/api/connection.html#Connection.prototype.readyState
+     */
+    return mongoose.connection.readyState === 1
+  }
+
   static async close () {
     try {
       await mongoose.connection.close()
