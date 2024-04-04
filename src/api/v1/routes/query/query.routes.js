@@ -1,6 +1,6 @@
-import { DiseaseController } from '../../../controllers/disease.controller.js'
-import { schemaValidation } from '../../../schemas/middlewares/validate.request.js'
-import diseaseValidator from '../../../schemas/disease.schema.js'
+import { DiseaseController } from '../../../../controllers/disease.controller.js'
+import { schemaValidation } from '../../../../schemas/middlewares/validate.request.js'
+import diseaseValidator from '../../../../schemas/disease.schema.js'
 
 export async function register (router) {
   router.get(

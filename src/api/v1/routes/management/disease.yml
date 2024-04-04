@@ -1,0 +1,36 @@
+DiseaseBody:
+  chapter_id:
+    type: string
+    description: Chapter ID
+    maxLength: 5
+    example: "I"
+  chapter_title:
+    type: string
+    description: Chapter title
+    example: "Infectious and Parasitic Diseases"
+  range_id:
+    type: string
+    description: Range ID
+    example: "A00-A09"
+  range_title:
+    type: string
+    description: Range title
+    example: "Intestinal infectious diseases"
+  three_code_id:
+    type: string
+    description: Four code ID
+    maxLength: 3
+    example: "A00"
+  three_code_title:
+    type: string
+    description: Three code title
+    example: "Cholera due to Vibrio cholerae 01, biovar cholerae"
+  four_code_id:
+    type: string
+    description: Four code ID
+    maxLength: 5
+    example: "A00.0"
+  four_code_title:
+    type: string
+    description: Four code title
+    example: "Cholera due to Vibrio cholerae 01, biovar cholerae"

@@ -1,0 +1,169 @@
+tags:
+  - name: disease
+    description: Disease management
+
+components:
+  schemas:
+    Disease:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Disease ID
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        chapter_id:
+          type: string
+          description: Chapter ID
+          maxLength: 5
+          example: "I"
+        chapter_title:
+          type: string
+          description: Chapter title
+          example: "Infectious and Parasitic Diseases"
+        range_id:
+          type: string
+          description: Range ID
+          example: "A00-A09"
+        range_title:
+          type: string
+          description: Range title
+          example: "Intestinal infectious diseases"
+        three_code_id:
+          type: string
+          description: Four code ID
+          maxLength: 3
+          example: "A00"
+        three_code_title:
+          type: string
+          description: Three code title
+          example: "Cholera due to Vibrio cholerae 01, biovar cholerae"
+        four_code_id:
+          type: string
+          description: Four code ID
+          maxLength: 5
+          example: "A00.0"
+        four_code_title:
+          type: string
+          description: Four code title
+          example: "Cholera due to Vibrio cholerae 01, biovar cholerae"
+
+    Result:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status
+          example: "OK"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Disease"
+
+paths:
+  /api/v1/diseases:
+    get:
+      tags:
+        - disease
+      summary: Get diseases
+      description: Get diseases
+      operationId: get_all_diseases
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+    post:
+      tags:
+        - disease
+      summary: Create disease
+      description: Create disease
+      operationId: create_disease
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Disease"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+  /api/v1/diseases/{id}:
+    get:
+      tags:
+        - disease
+      summary: Get disease by ID
+      description: Get disease by ID
+      operationId: get_disease_by_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Disease ID
+          schema:
+            type: string
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+    put:
+      tags:
+        - disease
+      summary: Update disease by ID
+      description: Update disease by ID
+      operationId: update_disease_by_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Disease ID
+          schema:
+            type: string
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Disease"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+    delete:
+      tags:
+        - disease
+      summary: Delete disease by ID
+      description: Delete disease by ID
+      operationId: delete_disease_by_id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Disease ID
+          schema:
+            type: string
+          example: "d290f1ee-6c54-4b01-90e6-d701748f0851"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"

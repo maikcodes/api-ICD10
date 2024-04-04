@@ -1,7 +1,7 @@
 import express, { Router } from 'express'
 import 'dotenv/config'
 
-import { registerRoutes, registerDocRoutes } from './v1/routes/register.js'
+import { registerRoutes, registerDocRoutes } from './api/v1/routes/register.js'
 
 const router = Router()
 const docRouter = Router()
