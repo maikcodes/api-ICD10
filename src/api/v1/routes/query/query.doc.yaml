@@ -1,0 +1,210 @@
+tags:
+  - name: disease queries
+    description: Disease queries
+
+paths:
+  /api/v1/diseases/chapter/{chapterId}:
+    get:
+      tags:
+        - disease queries
+      summary: Get diseases by chapter
+      description: Get diseases by chapter
+      operationId: get_diseases_by_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          required: true
+          description: Chapter
+          schema:
+            type: string
+          example: "I"
+        - name: page
+          in: query
+          required: false
+          description: Page number
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Limit
+          schema:
+            type: integer
+          example: 10
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+  /api/v1/diseases/three-digits-code/{threeDigitsCode}:
+    get:
+      tags:
+        - disease queries
+      summary: Get diseases by three digits code
+      description: Get diseases by three digits code
+      operationId: get_diseases_by_three_digits_code
+      parameters:
+        - name: threeDigitsCode
+          in: path
+          required: true
+          description: Three digits code
+          schema:
+            type: string
+          example: "A00"
+        - name: page
+          in: query
+          required: false
+          description: Page number
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Limit
+          schema:
+            type: integer
+          example: 10
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+  /api/v1/diseases/four-digits-code/{fourDigitsCode}:
+    get:
+      tags:
+        - disease queries
+      summary: Get diseases by four digits code
+      description: Get diseases by four digits code
+      operationId: get_diseases_by_four_digits_code
+      parameters:
+        - name: fourDigitsCode
+          in: path
+          required: true
+          description: Four digits code
+          schema:
+            type: string
+          example: "A00.0"
+        - name: page
+          in: query
+          required: false
+          description: Page number
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Limit
+          schema:
+            type: integer
+          example: 10
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+  /api/v1/diseases/keyword/{keyword}:
+    get:
+      tags:
+        - disease queries
+      summary: Get diseases by keyword
+      description: Get diseases by keyword
+      operationId: get_diseases_by_keyword
+      parameters:
+        - name: keyword
+          in: path
+          required: true
+          description: Keyword
+          schema:
+            type: string
+          example: "cholera"
+        - name: page
+          in: query
+          required: false
+          description: Page number
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Limit
+          schema:
+            type: integer
+          example: 10
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+  /api/v1/diseases/interval/{attribute}/{range}:
+    get:
+      tags:
+        - disease queries
+      summary: Get diseases by attribute and range
+      description: Get matching diseases according to a specific attribute and range
+      operationId: get_diseases_by_attribute_and_range
+      parameters:
+        - name: attribute
+          in: path
+          required: true
+          description: attribute
+          schema:
+            type: string
+            enum: ["chapter", "range", "sub_range", "specific_range", "three_code", "four_code"]
+          example: "chapter"
+        - name: range
+          in: path
+          required: true
+          description: range
+          schema:
+            type: string
+          examples:
+            chapter:
+              summary: Chapter
+              value: "XX-XXII"
+            range:
+              value: "V01-X59"
+            sub_range:
+              value: "V01-V99"
+            specific_range:
+              value: "V30-V39"
+            three_code:
+              value: "V31-V34"
+            four_code:
+              value: "V31.0-V31.9"
+        - name: page
+          in: query
+          required: false
+          description: Page number
+          schema:
+            type: integer
+          example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Limit
+          schema:
+            type: integer
+          example: 10
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
