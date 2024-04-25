@@ -8,7 +8,7 @@ const resolvedDirnamePath = path.resolve(rawDirnamePath)
 const __dirname = path.dirname(resolvedDirnamePath)
 
 const templatePath = path
-  .join(__dirname, '*/*.doc.yaml')
+  .join(__dirname, '*/*.doc.yml')
   .split(path.sep)
   .join('/')
 
