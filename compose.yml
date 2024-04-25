@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  db:
+    image: mongo:latest
+    container_name: icd10-api-db
+    ports:
+      - 27017:27017
+    volumes:
+      - db_data_icd10:/data/db
+
+  icd10-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: icd10-api
+    ports:
+      - 4000:4000
+    environment:
+      - DB_CONNECTION_STRING=mongodb://db:27017/icd10
+      - PORT=4000
+    depends_on:
+      - db
+    command: bash -c "npm run seed && npm run start"
+
+volumes:
+  db_data_icd10:

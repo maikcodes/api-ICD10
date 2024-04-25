@@ -1,6 +1,6 @@
 {
   "name": "api-icd10",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "This is open source ICD-10 API REST",
   "main": "index.js",
   "type": "module",
