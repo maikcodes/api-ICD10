@@ -1,6 +1,6 @@
 {
   "name": "api-icd10",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "This is open source ICD-10 API REST",
   "main": "index.js",
   "type": "module",
@@ -10,7 +10,8 @@
     "test": "",
     "lint_check": "standard",
     "lint_fix": "standard --fix",
-    "seed": "node src/database/seed.js"
+    "seed": "node src/database/seed.js",
+    "preinstall": "npx only-allow pnpm"
   },
   "repository": {
     "type": "git",
@@ -24,13 +25,13 @@
   "author": "willy maykros romero (maikcodes)",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.18.2",
-    "glob": "^10.3.12",
-    "mongoose": "^7.0.3",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
-    "zod": "^3.22.2"
+    "dotenv": "16.4.5",
+    "express": "4.19.2",
+    "glob": "10.3.12",
+    "mongoose": "7.0.3",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "5.0.0",
+    "zod": "3.22.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
