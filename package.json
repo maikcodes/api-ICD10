@@ -1,7 +1,7 @@
 {
-  "name": "api-icd10",
-  "version": "2.2.1",
-  "description": "This is open source ICD-10 API REST",
+  "name": "icd10-microservice",
+  "version": "3.0.0",
+  "description": "This is an open source ICD-10 microservice that provides a RESTful API to query and manage ICD-10 data.",
   "main": "index.js",
   "type": "module",
   "scripts": {
