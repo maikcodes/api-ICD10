@@ -1,8 +1,9 @@
 FROM node:21.7.0-slim AS base
 
+RUN npm install -g pnpm  
+
 FROM base AS deps
 
-RUN npm install -g pnpm  
 
 RUN corepack enable
 WORKDIR /app
